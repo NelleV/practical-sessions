@@ -40,7 +40,7 @@ The data can be downloaded
   What can you observe about the categories of the text?
 
 - Now looking at the entire dataset, how many articles are in the MEDI
-  category? How many are in the PHY category? And how many are in both?
+  category? How many are in the PHYS category? And how many are in both?
 
 ## Basic feature extraction: bag-of-words
 
