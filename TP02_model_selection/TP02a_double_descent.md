@@ -35,8 +35,10 @@ the number of polynomials, affect the model’s accuracy on training versus
 validation data, enabling us to plot validation curves and observe overfitting
 and underfitting patterns.
 
-1. Generate data from the model describe above, using $N=15$. Plot the
-   function and the data points.
+1. Generate data from the model describe above, using $N=15$: first, sample x
+   randomly from [-1, 1]. Then apply the function $y(x)$ on the samples drawn.
+
+   Plot the function y(x) and the sampled data points.
 
 ![](images/sampling_data.png)
 
