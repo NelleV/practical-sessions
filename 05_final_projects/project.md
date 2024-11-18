@@ -13,6 +13,24 @@ secreted by the bacteria. They consist mostly of toxins. Hence, discovering
 novel effectors is of great interest, both to better understand how bacteria
 interact in their environment, but also for health and ecological purposes.
 
+One of the challenges of such a ML task is that we are have only partial
+knowledge of the toxins.
+
+## Guidelines
+
+Projects can be done either by groups of 2 students or alone. They will be
+graded based on (1) a report; (2) the first interview; (3) possible, if needed
+for clarifications, a second interview.
+
+I will be available to answer questions about the data and the project during
+office hours on zoom friday afternoons, from 3.30pm to 5pm. This office hours
+need to be booked at least a day before. It will be on a first come first
+serve basis. The first interview will happen during one of these slots.
+
+The final report is due **Friday, December 20th**, and should be send by email
+at nelle.varoquaux@univ-grenoble-alpes.fr.  Instructions on the final report
+will be given during the second phase of the project.
+
 ## The dataset
 
 We downloaded the whole set of complete prokaryotic genomes in 2021 (30,000
@@ -24,14 +42,11 @@ all the proteins of all the organism we have.
 The goal of the project is to predict whether a protein an effector or not,
 and specifically, we wish to discover novel effectors family. An effector
 family can be defined as all the proteins that are a sequence similarity match
-to a known proteins.
+to a known proteins on either the whole protein length, or a "domain" of the
+protein, e.g., a substring of the amino acid chain.
 
 The data handed in to you is:
 
-    - `effectors.csv`: this is a dataframe where each row corresponds to a
-      protein (e.g., `GCA_000189435.3_ASM18943v3_1443` and each column to a
-      known effector/toxin. A hit to a known toxin is annotated as True (or
-      1).     
     - `training_pos_features.csv` contains the features extracted for a subset
       of the proteins that are known toxins.
     - `training_pos_features_sequences.csv` contains the protein sequences for
@@ -42,25 +57,21 @@ The data handed in to you is:
     - `training_pos_labels.csv` contains the subset of labels corresponding to
       the selected proteins files.
 
-    - and the equivalent files for negative samples (except for labels, as
-      these are all the hits that did not have a match to our known protein
-      database.
+    - and the equivalent files for proteins that were not successfully
+      annotated as toxins (except for labels, as this file would be entirely
+      empty).
 
 The features contains a series of features extracted from the protein sequence
 (amino acid proportion, di-amino acid proportion, entropy, bio physical
 proporties, shallow learning embedding "word 2 vec" approach, deep learning
-ESM approach, etc).
-
-
-The data can be downloaded
-[here](https://filesender.renater.fr/?s=download&token=b28c74b7-7bad-492a-8c9c-5d0119fd93b0)
+ESM approach, etc). See below for more information on the features.
 
 ## Preliminary analysis of the dataset and analysis plan
 
 The first part of this project is to perform a preliminary analysis of the
 dataset. You will do this by exploring the `training_pos_labels.csv` of the
 training data as well as performing statistics on the features
-`training_pos_features.csv` and `training_neg_features.csv`
+`training_pos_features.csv` and `training_others_features.csv`
 
 - How many proteins are in this dataset?
 - What is the proportion of positive labels in the dataset? What is the
@@ -78,3 +89,31 @@ training data as well as performing statistics on the features
   this cross validation strategy is a good way to check for generalization in
   this setting.
 
+ 
+## Annexe
+
+### Feature extraction
+
+From each protein's amino acid sequence, we have extracted features using (1)
+specific knowledge of the field of protein function annotation; (2) embeddings
+of the protein's amino acid sequence using both shallow networks and LLMs.
+
+The columns of the feature data matrix are named through a convention that
+allows to map to a type of feature:
+
+- Columns starting with "G1" are amino-acid proportions, the equivalent of
+  bags of words for protein sequences.
+- Columns starting with "G2" are di-amino acid proportions;
+- Columns starting with "G3" are physico-chemical properties extracted from
+  the protein sequences: polarity, hydrophobicity, etc
+- Columns starting with "G4" are C-triads, a dimensionality reduction of the
+  tri-amino-acid decomposition.
+- Columns starting with "G5" are shallow embeddings "word2vec"
+- Columns starting with "G6" corresponds to the shannon entropy on bits and
+  pieces of the protein sequences: we split the protein sequences in chunks,
+  and compute the shannon entropy.
+- Columns starting with "G7" are global protein parameters inferred based on
+  amino acid compositions: molecular weight,  isoelectric point, molar
+  extinction coefficient , etc
+- Columns startinig with "G8" are quasi order features 
+- Columns startinig with "G10" 
