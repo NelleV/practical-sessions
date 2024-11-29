@@ -116,4 +116,4 @@ allows to map to a type of feature:
   amino acid compositions: molecular weight,  isoelectric point, molar
   extinction coefficient , etc
 - Columns startinig with "G8" are quasi order features 
-- Columns startinig with "G10" 
+- Columns startinig with "G10" are ESM-based like: https://github.com/facebookresearch/esm
